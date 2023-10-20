@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    form {
+      text-align: center;
+    }
+
+    p {
+      font-weight: bold;
+    }
+
+    div {
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      background-color: #251e19;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+    .popup-button {
+      background-color: #251e19;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin: 5px;
+    }
+  </style>
+  <script>
+    function add() {
+      var productSelect = document.getElementById('product');
+      var productOption = productSelect.options[productSelect.selectedIndex];
+      var productName = productOption.textContent;
+      var productPrice = parseFloat(productOption.value);
+      var productQuantity = parseInt(document.getElementById('number').value);
+
+      if (productOption.value !== "0" && productQuantity > 0) {
+        var subtotal = productPrice * productQuantity;
+        var shippingCost = calculateShippingCost(subtotal);
+        var total = subtotal + shippingCost;
+
+        var popup = document.querySelector('.popup');
+        popup.innerHTML = `
+          <p>Detalle del Producto:</p>
+          <p>Nombre del Producto: ${productName}</p>
+          <p>Importe: ¥ ${productPrice}</p>
+          <p>Cantidad: ${productQuantity}</p>
+          <p>Subtotal: ¥ ${subtotal}</p>
+          <p>Gastos de Envío: ¥ ${shippingCost}</p>
+          <p>Total: ¥ ${total}</p>
+        `;
+        popup.style.display = 'block';
+      } else {
+        alert("Por favor, seleccione un producto válido y una cantidad mayor que cero.");
+      }
+    }
+
+    function calc() {
+    }
+
+    function calculateShippingCost(subtotal) {
+      if (subtotal <= 2000) {
+        return 500;
+      } else if (subtotal <= 3000) {
+        return 250;
+      } else {
+        return 0;
+      }
+    }
+  </script>
+</head>
+<body>
+  <form>
+    <p>Seleccione un producto</p>
+    <div>
+      <select id="product" required>
+        <option hidden value="0">Por favor, seleccione.</option>
+        <option value="500">Mezcla original 200g ¥ 500</option>
+        <option value="900">Mezcla original 500g ¥ 900</option>
+        <option value="700">Mezcla especial 200g ¥ 700</option>
+        <option value="1200">Mezcla especial 500g, 1.200 yenes.</option>
+      </select>
+      <p>Seleccione la cantidad</p>
+      <input type="number" min="1" max="5" id="number" required>
+    </div>
+    <br>
+    <input type="button" class="btn" value="Añadir al carrito" onclick="add()">
+    <input type="button" class="btn" value="Calcular Importe Total" onclick="calc()">
+  </form>
+  <div class="popup">
+    <!-- Contenido de la ventana emergente -->
+  </div>
+</body>
+</html>
