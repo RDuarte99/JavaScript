@@ -39,4 +39,32 @@
     </section>
     <script type="text/javascript" src="javascripts/validation.js"></script>
   </body>
+  <script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function () {
+    const emailInput = document.getElementById('email');
+    const emailConfirmInput = document.getElementById('email_confirm');
+    const errorMessage = document.createElement('p');
+    errorMessage.textContent = 'El correo electrónico no coincide';
+    errorMessage.style.color = '#d14539';
+    errorMessage.style.display = 'none';
+
+    emailConfirmInput.parentNode.appendChild(errorMessage);
+
+    function validateEmails() {
+      const email = emailInput.value;
+      const emailConfirm = emailConfirmInput.value;
+
+      if (email !== emailConfirm) {
+        errorMessage.style.display = 'block';
+        emailConfirmInput.style.backgroundColor = 'rgba(230, 169, 171, 0.5)';
+      } else {
+        errorMessage.style.display = 'none';
+        emailConfirmInput.style.backgroundColor = 'initial';
+      }
+    }
+
+    emailInput.addEventListener('input', validateEmails);
+    emailConfirmInput.addEventListener('input', validateEmails);
+  });
+</script>
 </html>
