@@ -1,0 +1,53 @@
+def introducir_puntos_y_comentarios():
+    while True:
+        print('Por favor, introduzca una puntuación en una escala de 1 a 5')
+        point = input()
+        if point.isdecimal():
+            point = int(point)
+            if 1 <= point <= 5:
+                print('Introduzca sus comentarios.')
+                comment = input()
+                post = f'punto: {point} comentario: {comment}'
+                file_pc = open("data.txt", 'a')
+                file_pc.write(f'{post}\n')
+                file_pc.close()
+                break
+            else:
+                print('Por favor, introduzca un valor entre 1 y 5')
+
+def comprobar_resultados_hasta_la_fecha():
+    print('Resultados hasta la fecha.')
+    read_file = open("data.txt", "r")
+    print(read_file.read())
+    read_file.close()
+
+def terminar_proceso():
+    print('Terminación.')
+    exit()
+
+def seleccionar_proceso(num):
+    if num == 1:
+        introducir_puntos_y_comentarios()
+    elif num == 2:
+        comprobar_resultados_hasta_la_fecha()
+    elif num == 3:
+        terminar_proceso()
+    else:
+        print('Por favor, introduzca del 1 a 3')
+
+def menu_principal():
+    while True:
+        print('Seleccione el proceso que desea aplicar')
+        print('1: Introducir puntos de evaluación y comentarios')
+        print('2: Comprobar los resultados hasta ahora.')
+        print('3: Terminar.')
+        num = input()
+
+        if num.isdecimal():
+            num = int(num)
+            seleccionar_proceso(num)
+        else:
+            print('Por favor, introduzca del 1 a 3')
+
+if __name__ == "__main__":
+    menu_principal()
